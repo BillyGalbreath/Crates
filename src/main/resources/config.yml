@@ -1,0 +1,8 @@
+# Show colors in console output (and log files)
+color-logs: true
+
+# Debug output to console (and log files)
+debug-mode: false
+
+# Language file (for translations)
+language-file: lang-en.yml
