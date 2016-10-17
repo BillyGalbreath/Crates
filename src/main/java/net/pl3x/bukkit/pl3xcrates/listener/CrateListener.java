@@ -1,11 +1,16 @@
 package net.pl3x.bukkit.pl3xcrates.listener;
 
 import net.pl3x.bukkit.pl3xcrates.ItemUtil;
+import net.pl3x.bukkit.pl3xcrates.Logger;
 import net.pl3x.bukkit.pl3xcrates.Pl3xCrates;
 import net.pl3x.bukkit.pl3xcrates.configuration.Lang;
 import net.pl3x.bukkit.pl3xcrates.crate.Crate;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.CreatureSpawner;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -157,5 +162,30 @@ public class CrateListener implements Listener {
 
         // not owner, cancel pickup event
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onMovSpawnerPlace(BlockPlaceEvent event) {
+        Block block = event.getBlock();
+        if (block.getType() != Material.MOB_SPAWNER) {
+            return; // not a mob spawner
+        }
+
+        BlockState blockState = block.getState();
+        if (!(blockState instanceof CreatureSpawner)) {
+            return; // not a mob spawner
+        }
+
+        EntityType entityType = plugin.getNBTHandler().getEntityType(event.getItemInHand());
+        Logger.debug("EntityType: " + entityType);
+        if (entityType == null) {
+            return; // unable to determine entity type
+        }
+
+        CreatureSpawner spawner = (CreatureSpawner) blockState;
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            spawner.setSpawnedType(entityType);
+            spawner.update(true);
+        }, 1);
     }
 }
