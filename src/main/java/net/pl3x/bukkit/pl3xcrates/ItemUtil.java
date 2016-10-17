@@ -53,7 +53,7 @@ public class ItemUtil {
         }
 
         if (itemStack == null) {
-            itemStack = new ItemStack(material);
+            itemStack = new ItemStack(material, 1, (short) section.getInt("data", 0));
         }
 
         if (itemStack.getAmount() == 1) {
