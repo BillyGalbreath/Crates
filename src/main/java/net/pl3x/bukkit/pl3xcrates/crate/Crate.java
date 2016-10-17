@@ -227,6 +227,11 @@ public class Crate {
     public void doOpen(Location location, Player player) {
         Pl3xCrates plugin = Pl3xCrates.getPlugin();
 
+        // run the open commands
+        for (String command : openCommands) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+        }
+
         // run the open tasks
         if (openParticles != null) {
             new ParticleTask(location, openParticles).runTask(plugin);
