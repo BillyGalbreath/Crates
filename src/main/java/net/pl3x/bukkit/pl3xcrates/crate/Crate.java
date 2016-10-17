@@ -229,7 +229,8 @@ public class Crate {
 
         // run the open commands
         for (String command : openCommands) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command
+                    .replace("{player}", player.getName()));
         }
 
         // run the open tasks
