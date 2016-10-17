@@ -53,17 +53,17 @@ public class CrateManager {
             try {
                 crateConfig.load();
             } catch (IOException e) {
-                Logger.error("Could not load crate file: " + file.getAbsolutePath());
+                Logger.error("Could not load crate file: " + file.getName());
                 e.printStackTrace();
                 continue;
             } catch (InvalidConfigurationException e) {
-                Logger.error("Crate file contains invalid YAML structure: " + file.getAbsolutePath());
+                Logger.error("Crate file contains invalid YAML structure: " + file.getName());
                 e.printStackTrace();
                 continue;
             }
 
             if (crateConfig.isDisabled()) {
-                Logger.error("Crate is disabled in config: " + file.getAbsolutePath());
+                Logger.warn("Crate is disabled in config: " + file.getName());
                 continue;
             }
 
