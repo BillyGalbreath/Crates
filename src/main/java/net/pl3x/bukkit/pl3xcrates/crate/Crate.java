@@ -24,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -133,7 +134,7 @@ public class Crate {
     }
 
     public void closeInventories() {
-        inventory.getViewers().forEach(HumanEntity::closeInventory);
+        new ArrayList<>(inventory.getViewers()).forEach(HumanEntity::closeInventory);
     }
 
     public Set<Location> getLocations() {
