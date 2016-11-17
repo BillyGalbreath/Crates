@@ -1,11 +1,11 @@
 package net.pl3x.bukkit.pl3xcrates.nms;
 
-import net.minecraft.server.v1_10_R1.AxisAlignedBB;
-import net.minecraft.server.v1_10_R1.BlockPosition;
-import net.minecraft.server.v1_10_R1.WorldServer;
+import net.minecraft.server.v1_11_R1.AxisAlignedBB;
+import net.minecraft.server.v1_11_R1.BlockPosition;
+import net.minecraft.server.v1_11_R1.WorldServer;
 import net.pl3x.bukkit.pl3xcrates.api.BoundingBox;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
 import org.bukkit.util.Vector;
 
 public class BoundingBoxHandler implements BoundingBox {
