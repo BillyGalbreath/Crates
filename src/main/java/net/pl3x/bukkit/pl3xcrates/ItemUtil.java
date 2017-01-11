@@ -10,18 +10,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class ItemUtil {
     public static void giveItem(Player player, ItemStack itemStack) {
-        HashMap<Integer, ItemStack> spillOver = player.getInventory().addItem(itemStack);
-        Logger.debug("Spillover: " + spillOver.size() + ": " + spillOver);
-        for (ItemStack spillOverItem : spillOver.values()) {
-            Logger.debug(player.getName() + "'s inventory is full, dropping to ground!");
-            Item drop = player.getWorld().dropItem(player.getLocation(), spillOverItem);
-            setLockedOwner(drop, player.getUniqueId().toString());
-        }
+        Logger.debug(player.getName() + " received item at their feet! " + itemStack.toString());
+        Item drop = player.getWorld().dropItem(player.getLocation(), itemStack);
+        setLockedOwner(drop, player.getUniqueId().toString());
     }
 
     public static boolean takeItem(Player player, ItemStack itemStack) {
