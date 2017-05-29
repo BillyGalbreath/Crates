@@ -1,12 +1,12 @@
 package net.pl3x.bukkit.pl3xcrates.nms;
 
-import net.minecraft.server.v1_11_R1.ChatComponentText;
-import net.minecraft.server.v1_11_R1.IChatBaseComponent;
-import net.minecraft.server.v1_11_R1.MojangsonParseException;
-import net.minecraft.server.v1_11_R1.MojangsonParser;
+import net.minecraft.server.v1_12_R1.ChatComponentText;
+import net.minecraft.server.v1_12_R1.IChatBaseComponent;
+import net.minecraft.server.v1_12_R1.MojangsonParseException;
+import net.minecraft.server.v1_12_R1.MojangsonParser;
 import net.pl3x.bukkit.pl3xcrates.Logger;
 import net.pl3x.bukkit.pl3xcrates.api.ItemNBT;
-import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemNBTHandler implements ItemNBT {
@@ -15,7 +15,7 @@ public class ItemNBTHandler implements ItemNBT {
             return bukkitItem; // nothing to parse
         }
 
-        net.minecraft.server.v1_11_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(bukkitItem);
+        net.minecraft.server.v1_12_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(bukkitItem);
         try {
             nmsItem.setTag(MojangsonParser.parse(parseNBT(nbt.split(" ")).toPlainText()));
         } catch (MojangsonParseException e) {
