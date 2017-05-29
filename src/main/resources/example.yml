@@ -32,7 +32,7 @@ effects:
       radius: 15
       duration: 20
     fireworks:
-      nbt: '{Fireworks:{Flight:1,Explosions:[{Type:1,Colors:[7995154,16252672,15615],FadeColors:[16777215]}]}}'
+      nbt: '{Fireworks:{Flight:1,Explosions:[{Type:1,Colors:[I;7995154,16252672,15615],FadeColors:[16777215]}]}}'
     sound:
       type: UI_BUTTON_CLICK
       volume: 1.0
