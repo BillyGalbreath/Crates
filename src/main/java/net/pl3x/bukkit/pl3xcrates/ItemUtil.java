@@ -1,14 +1,8 @@
 package net.pl3x.bukkit.pl3xcrates;
 
-import net.minecraft.server.v1_12_R1.EntityItem;
-import net.minecraft.server.v1_12_R1.WorldServer;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftItem;
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -21,13 +15,7 @@ import java.util.List;
 public class ItemUtil {
     public static void giveItem(Player player, ItemStack itemStack) {
         Logger.debug(player.getName() + " received item at their feet! " + itemStack.toString());
-        //Item drop = player.getWorld().dropItem(player.getLocation(), itemStack);
-        Location location = player.getLocation();
-        WorldServer world = ((CraftWorld) location.getWorld()).getHandle();
-        EntityItem entity = new EntityItem(world,
-                location.getX(), location.getY(), location.getZ(),
-                CraftItemStack.asNMSCopy(itemStack));
-        setLockedOwner(new CraftItem(world.getServer(), entity), player.getUniqueId().toString());
+        setLockedOwner(player.getWorld().dropItem(player.getLocation(), itemStack), player);
     }
 
     public static boolean takeItem(Player player, ItemStack itemStack) {
@@ -104,8 +92,8 @@ public class ItemUtil {
         return material;
     }
 
-    public static void setLockedOwner(Item item, String uuid) {
-        item.setMetadata("owner", new FixedMetadataValue(Pl3xCrates.getPlugin(), uuid));
+    public static void setLockedOwner(Item item, Player player) {
+        item.setMetadata("owner", new FixedMetadataValue(Pl3xCrates.getPlugin(), player.getUniqueId().toString()));
     }
 
     public static String getLockedOwner(Item item) {
