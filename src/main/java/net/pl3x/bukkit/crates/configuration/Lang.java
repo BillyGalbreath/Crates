@@ -7,6 +7,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Lang {
     public static String COMMAND_NO_PERMISSION;
@@ -31,6 +33,7 @@ public class Lang {
     public static String RECEIVED_KEY;
     public static String VERSION;
     public static String RELOAD;
+    public static List<String> DEFAULT_HOLOGRAM_TEXT = new ArrayList<>();
 
     public static void reload() {
         Crates plugin = Crates.getPlugin();
@@ -63,6 +66,7 @@ public class Lang {
         RECEIVED_KEY = config.getString("received-key", "&dYou have received x{count} {key}&d!");
         VERSION = config.getString("version", "&d{plugin} v{version}.");
         RELOAD = config.getString("reload", "&d{plugin} v{version} reloaded.");
+        DEFAULT_HOLOGRAM_TEXT = config.getStringList("default-hologram-text");
     }
 
     public static void send(CommandSender recipient, String message) {

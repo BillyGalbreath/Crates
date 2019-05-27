@@ -11,8 +11,6 @@ public class ParticleData {
     private final Vector offsetMin;
     private final Vector offsetMax;
     private final int amount;
-    private final int id;
-    private final int data;
     private final float speed;
     private final int radius;
     private final int duration;
@@ -26,8 +24,6 @@ public class ParticleData {
                 particlesSection.getDouble("offset-max.y", 0D),
                 particlesSection.getDouble("offset-max.z", 0D));
         this.amount = particlesSection.getInt("amount", 1);
-        this.id = particlesSection.getInt("id", 0);
-        this.data = particlesSection.getInt("data", 0);
         this.speed = (float) particlesSection.getDouble("speed", 0D);
         this.radius = particlesSection.getInt("radius", 16);
         this.duration = particlesSection.getInt("duration", 0);
@@ -68,14 +64,6 @@ public class ParticleData {
 
     public int getAmount() {
         return amount;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getData() {
-        return data;
     }
 
     public float getSpeed() {

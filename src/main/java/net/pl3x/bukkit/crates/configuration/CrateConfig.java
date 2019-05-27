@@ -2,9 +2,9 @@ package net.pl3x.bukkit.crates.configuration;
 
 import net.pl3x.bukkit.crates.ItemUtil;
 import net.pl3x.bukkit.crates.Logger;
-import net.pl3x.bukkit.crates.Crates;
 import net.pl3x.bukkit.crates.crate.CrateType;
 import net.pl3x.bukkit.crates.crate.Reward;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -20,11 +20,9 @@ import java.util.List;
 import java.util.Set;
 
 public class CrateConfig extends YamlConfiguration {
-    private final Crates plugin;
     private final File file;
 
     public CrateConfig(File file) {
-        this.plugin = Crates.getPlugin();
         this.file = file;
     }
 
@@ -41,7 +39,7 @@ public class CrateConfig extends YamlConfiguration {
     }
 
     public CrateType getType() {
-        return CrateType.valueOf(getString("type", "NORMAL").toUpperCase());
+        return CrateType.valueOf(getString("type", "SLIDE_FANCY").toUpperCase());
     }
 
     public boolean isDisabled() {
@@ -65,6 +63,25 @@ public class CrateConfig extends YamlConfiguration {
             }
         }
         return allowedBlocks;
+    }
+
+    public List<String> getHologramText() {
+        List<String> text = getStringList("hologram.text");
+        if (text.isEmpty()) {
+            text.addAll(Lang.DEFAULT_HOLOGRAM_TEXT);
+        }
+        for (int i = 0; i < text.size(); i++) {
+            text.set(i, ChatColor.translateAlternateColorCodes('&', text.get(i)));
+        }
+        return text;
+    }
+
+    public Vector getHologramOffset() {
+        Vector offset = new Vector(0.5, 2.0, 0.5);
+        offset.setX(offset.getX() + getDouble("hologram.offset.x", 0));
+        offset.setY(offset.getY() + getDouble("hologram.offset.y", 0));
+        offset.setZ(offset.getZ() + getDouble("hologram.offset.z", 0));
+        return offset;
     }
 
     public void getEffects() {

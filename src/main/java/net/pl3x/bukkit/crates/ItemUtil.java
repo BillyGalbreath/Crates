@@ -1,5 +1,6 @@
 package net.pl3x.bukkit.crates;
 
+import net.pl3x.bukkit.crates.nms.ItemNBTHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -47,7 +48,7 @@ public class ItemUtil {
         }
 
         if (itemStack == null) {
-            itemStack = new ItemStack(material, 1, (short) section.getInt("data", 0));
+            itemStack = new ItemStack(material);
         }
 
         if (itemStack.getAmount() == 1) {
@@ -55,8 +56,7 @@ public class ItemUtil {
             itemStack.setAmount(amount);
         }
 
-        itemStack = Crates.getPlugin().getNBTHandler()
-                .setItemNBT(itemStack, section.getString("nbt"), section.getCurrentPath());
+        itemStack = ItemNBTHandler.setItemNBT(itemStack, section.getString("nbt"), section.getCurrentPath());
 
         ItemMeta itemMeta = itemStack.getItemMeta();
 

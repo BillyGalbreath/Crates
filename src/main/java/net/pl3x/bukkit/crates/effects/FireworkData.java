@@ -1,6 +1,6 @@
 package net.pl3x.bukkit.crates.effects;
 
-import net.pl3x.bukkit.crates.Crates;
+import net.pl3x.bukkit.crates.nms.ItemNBTHandler;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -11,7 +11,7 @@ public class FireworkData {
     private final int duration;
 
     public FireworkData(ConfigurationSection fireworksSection) {
-        ItemStack item = Crates.getPlugin().getNBTHandler().setItemNBT(
+        ItemStack item = ItemNBTHandler.setItemNBT(
                 new ItemStack(Material.FIREWORK_ROCKET),
                 fireworksSection.getString("nbt"),
                 fireworksSection.getCurrentPath());

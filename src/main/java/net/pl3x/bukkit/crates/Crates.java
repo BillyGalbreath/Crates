@@ -1,22 +1,18 @@
 package net.pl3x.bukkit.crates;
 
-import net.pl3x.bukkit.crates.api.ItemNBT;
 import net.pl3x.bukkit.crates.command.CmdPl3xCrates;
 import net.pl3x.bukkit.crates.configuration.Config;
 import net.pl3x.bukkit.crates.configuration.Lang;
 import net.pl3x.bukkit.crates.crate.CrateManager;
 import net.pl3x.bukkit.crates.listener.CrateListener;
-import net.pl3x.bukkit.crates.nms.ItemNBTHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Crates extends JavaPlugin {
-    private ItemNBT nbtHandler;
-    private CrateManager crateManager;
+    private static Crates instance;
 
     public Crates() {
-        crateManager = new CrateManager(this);
-        nbtHandler = new ItemNBTHandler();
+        instance = this;
     }
 
     @Override
@@ -24,7 +20,7 @@ public class Crates extends JavaPlugin {
         Config.reload();
         Lang.reload();
 
-        crateManager.loadAll();
+        CrateManager.INSTANCE.loadAll();
 
         Bukkit.getPluginManager().registerEvents(new CrateListener(this), this);
 
@@ -35,20 +31,12 @@ public class Crates extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        crateManager.unloadAll();
+        CrateManager.INSTANCE.unloadAll();
 
         Logger.info(getName() + " disabled.");
     }
 
     public static Crates getPlugin() {
-        return Crates.getPlugin(Crates.class);
-    }
-
-    public ItemNBT getNBTHandler() {
-        return nbtHandler;
-    }
-
-    public CrateManager getCrateManager() {
-        return crateManager;
+        return instance;
     }
 }

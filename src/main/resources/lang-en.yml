@@ -20,3 +20,7 @@ give-key: "&dx{count} {key} &dgiven to player(s)."
 received-key: "&dYou have received x{count} {key}&d!"
 version: "&d{plugin} v{version}."
 reload: "&d{plugin} v{version} reloaded."
+hologram-text:
+  - "{crate}"
+  - "Right-Click to Open!"
+  - "Left-Click to Preview!"

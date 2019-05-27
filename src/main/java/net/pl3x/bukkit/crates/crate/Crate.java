@@ -1,11 +1,12 @@
 package net.pl3x.bukkit.crates.crate;
 
-import net.pl3x.bukkit.crates.ItemUtil;
 import net.pl3x.bukkit.crates.Crates;
+import net.pl3x.bukkit.crates.ItemUtil;
 import net.pl3x.bukkit.crates.configuration.CrateConfig;
 import net.pl3x.bukkit.crates.effects.FireworkData;
 import net.pl3x.bukkit.crates.effects.ParticleData;
 import net.pl3x.bukkit.crates.effects.SoundData;
+import net.pl3x.bukkit.crates.hook.HologramHook;
 import net.pl3x.bukkit.crates.task.FireworkTask;
 import net.pl3x.bukkit.crates.task.ParticleTask;
 import net.pl3x.bukkit.crates.task.SoundTask;
@@ -41,6 +42,8 @@ public class Crate {
     private final Vector knockback;
     private final List<Reward> rewards;
     private final Inventory inventory;
+    private final List<String> hologramText;
+    private final Vector hologramOffset;
 
     private final List<String> openCommands;
     private final ParticleData openParticles;
@@ -67,6 +70,9 @@ public class Crate {
         this.rewards = crateConfig.getRewards();
         this.inventory = Bukkit.createInventory(null, (int) Math.floor(rewards.size() / 9) + 1 <= 27 ? 27 : 54, name);
         this.openCommands = crateConfig.getStringList("effects.on-open.commands");
+
+        hologramText = crateConfig.getHologramText();
+        hologramOffset = crateConfig.getHologramOffset();
 
         ConfigurationSection configOpenParticles = crateConfig.getConfigurationSection("effects.on-open.particles");
         this.openParticles = configOpenParticles == null ? null : new ParticleData(configOpenParticles);
@@ -121,6 +127,14 @@ public class Crate {
         return allowedBlocks;
     }
 
+    public List<String> getHologramText() {
+        return hologramText;
+    }
+
+    public Vector getHologramOffset() {
+        return hologramOffset;
+    }
+
     public Vector getKnockback() {
         return knockback;
     }
@@ -144,6 +158,7 @@ public class Crate {
     public boolean addLocation(Location location) {
         if (locations.add(location)) {
             startDormant(location);
+            HologramHook.addHologram(location, this, hologramText);
             return true;
         }
         return false;
@@ -152,9 +167,14 @@ public class Crate {
     public boolean removeLocation(Location location) {
         if (locations.remove(location)) {
             stopDormant(location);
+            HologramHook.removeHologram(location);
             return true;
         }
         return false;
+    }
+
+    public void removeHolograms() {
+        locations.forEach(HologramHook::removeHologram);
     }
 
     public void addOpenInventory(Inventory inventory) {
@@ -162,6 +182,7 @@ public class Crate {
     }
 
     public void removeOpenInventory(Inventory inventory) {
+        new HashSet<>(inventory.getViewers()).forEach(HumanEntity::closeInventory);
         openInventories.remove(inventory);
     }
 
@@ -235,7 +256,9 @@ public class Crate {
 
         // run the open tasks
         if (openParticles != null) {
-            new ParticleTask(location, openParticles).runTask(plugin);
+            for (int i = 0; i < openParticles.getAmount(); i++) {
+                new ParticleTask(location, openParticles).runTask(plugin);
+            }
         }
         if (openFireworks != null) {
             new FireworkTask(location, openFireworks).runTask(plugin);
@@ -247,6 +270,7 @@ public class Crate {
         // open crate type for player
         switch (type) {
             case NORMAL:
+            case NORMAL_FANCY:
                 new Normal(player, this);
                 break;
             case ROULETTE:

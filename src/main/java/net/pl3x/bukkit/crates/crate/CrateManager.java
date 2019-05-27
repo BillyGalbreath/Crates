@@ -1,8 +1,8 @@
 package net.pl3x.bukkit.crates.crate;
 
+import net.pl3x.bukkit.crates.Crates;
 import net.pl3x.bukkit.crates.ItemUtil;
 import net.pl3x.bukkit.crates.Logger;
-import net.pl3x.bukkit.crates.Crates;
 import net.pl3x.bukkit.crates.configuration.CrateConfig;
 import net.pl3x.bukkit.crates.configuration.DataConfig;
 import org.bukkit.Location;
@@ -18,10 +18,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CrateManager {
+    public static final CrateManager INSTANCE = new CrateManager(Crates.getPlugin());
+
     private final Crates plugin;
     private final Set<Crate> crates = new HashSet<>();
 
-    public CrateManager(Crates plugin) {
+    private CrateManager(Crates plugin) {
         this.plugin = plugin;
     }
 
@@ -78,6 +80,7 @@ public class CrateManager {
         for (Crate crate : crates) {
             crate.stopAllDormant();
             crate.closeInventories();
+            crate.removeHolograms();
         }
         crates.clear();
     }

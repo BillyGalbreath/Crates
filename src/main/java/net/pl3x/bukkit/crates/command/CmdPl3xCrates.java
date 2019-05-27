@@ -1,12 +1,13 @@
 package net.pl3x.bukkit.crates.command;
 
+import net.pl3x.bukkit.crates.Crates;
 import net.pl3x.bukkit.crates.ItemUtil;
 import net.pl3x.bukkit.crates.Logger;
-import net.pl3x.bukkit.crates.Crates;
 import net.pl3x.bukkit.crates.configuration.Config;
 import net.pl3x.bukkit.crates.configuration.DataConfig;
 import net.pl3x.bukkit.crates.configuration.Lang;
 import net.pl3x.bukkit.crates.crate.Crate;
+import net.pl3x.bukkit.crates.crate.CrateManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -16,8 +17,8 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,7 +40,7 @@ public class CmdPl3xCrates implements TabExecutor {
                     .collect(Collectors.toList());
         }
         if (args.length == 2 && (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("givekey"))) {
-            return plugin.getCrateManager().getCrates().stream()
+            return CrateManager.INSTANCE.getCrates().stream()
                     .filter(crate -> crate.getIdentifier().startsWith(args[1].toLowerCase()))
                     .map(Crate::getIdentifier).collect(Collectors.toList());
         }
@@ -48,7 +49,7 @@ public class CmdPl3xCrates implements TabExecutor {
                     .filter(player -> player.getName().toLowerCase().startsWith(args[2].toLowerCase()))
                     .map(Player::getName).collect(Collectors.toList());
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     @Override
@@ -67,7 +68,7 @@ public class CmdPl3xCrates implements TabExecutor {
             }
 
             Logger.debug("Unloading all crates...");
-            plugin.getCrateManager().unloadAll();
+            CrateManager.INSTANCE.unloadAll();
 
             Logger.debug("Reloading config...");
             Config.reload();
@@ -79,7 +80,7 @@ public class CmdPl3xCrates implements TabExecutor {
             DataConfig.reloadConfig();
 
             Logger.debug("Reloading all crates...");
-            plugin.getCrateManager().loadAll();
+            CrateManager.INSTANCE.loadAll();
 
             Logger.info("Reloaded crates and configs.");
             Lang.send(sender, Lang.RELOAD
@@ -105,7 +106,7 @@ public class CmdPl3xCrates implements TabExecutor {
                 return true;
             }
 
-            Crate crate = plugin.getCrateManager().getCrate(args[1]);
+            Crate crate = CrateManager.INSTANCE.getCrate(args[1]);
             if (crate == null) {
                 Lang.send(sender, Lang.CRATE_DOES_NOT_EXIST);
                 return true;
@@ -156,7 +157,7 @@ public class CmdPl3xCrates implements TabExecutor {
             }
 
             Location blockLocation = block.getLocation();
-            Crate crate = plugin.getCrateManager().getCrate(blockLocation);
+            Crate crate = CrateManager.INSTANCE.getCrate(blockLocation);
             if (crate == null) {
                 Lang.send(sender, Lang.CRATE_NOT_AT_BLOCK);
                 return true;
@@ -182,7 +183,7 @@ public class CmdPl3xCrates implements TabExecutor {
                 return true;
             }
 
-            Crate crate = plugin.getCrateManager().getCrate(args[1]);
+            Crate crate = CrateManager.INSTANCE.getCrate(args[1]);
             if (crate == null) {
                 Lang.send(sender, Lang.CRATE_DOES_NOT_EXIST);
                 return true;
@@ -196,7 +197,7 @@ public class CmdPl3xCrates implements TabExecutor {
             Set<Player> target = new HashSet<>();
             if (args[2].equalsIgnoreCase("all")) {
                 Collection<? extends Player> online = Bukkit.getOnlinePlayers();
-                if (online == null || online.isEmpty()) {
+                if (online.isEmpty()) {
                     Lang.send(sender, Lang.PLAYER_NOT_ONLINE);
                     return true;
                 }

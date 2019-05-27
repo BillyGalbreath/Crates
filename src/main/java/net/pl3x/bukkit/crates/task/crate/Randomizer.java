@@ -1,18 +1,21 @@
 package net.pl3x.bukkit.crates.task.crate;
 
+import net.pl3x.bukkit.crates.Crates;
 import net.pl3x.bukkit.crates.ItemUtil;
 import net.pl3x.bukkit.crates.Logger;
-import net.pl3x.bukkit.crates.Crates;
 import net.pl3x.bukkit.crates.crate.Crate;
 import net.pl3x.bukkit.crates.crate.Reward;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.HumanEntity;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Randomizer extends BukkitRunnable {
     final Player player;
@@ -73,15 +76,36 @@ public abstract class Randomizer extends BukkitRunnable {
             }
         }
 
-        Bukkit.getScheduler().runTaskLater(Crates.getPlugin(), () -> {
-            List<HumanEntity> viewers = inventory.getViewers();
-            if (viewers != null && !viewers.isEmpty()) {
-                viewers.get(0).closeInventory();
-                Bukkit.getScheduler().runTaskLater(Crates.getPlugin(),
-                        () -> crate.removeOpenInventory(inventory), 10);
-            }
-        }, 40);
+        Bukkit.getScheduler().runTaskLater(Crates.getPlugin(),
+                () -> crate.removeOpenInventory(inventory), 200);
     }
 
     abstract Reward cycleIt(boolean done);
+
+    public ItemStack getGlass(int index) {
+        ItemStack glass = index >= 0 ? PANES.get(index) : PANES.get(ThreadLocalRandom.current().nextInt(PANES.size()));
+        ItemMeta meta = glass.getItemMeta();
+        meta.setDisplayName(index < 0 ? "Rolling..." : "Winner!");
+        glass.setItemMeta(meta);
+        return glass;
+    }
+
+    private static final List<ItemStack> PANES = Arrays.asList(
+            new ItemStack(Material.WHITE_STAINED_GLASS_PANE),
+            new ItemStack(Material.ORANGE_STAINED_GLASS_PANE),
+            new ItemStack(Material.MAGENTA_STAINED_GLASS_PANE),
+            new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE),
+            new ItemStack(Material.YELLOW_STAINED_GLASS_PANE),
+            new ItemStack(Material.LIME_STAINED_GLASS_PANE),
+            new ItemStack(Material.PINK_STAINED_GLASS_PANE),
+            new ItemStack(Material.GRAY_STAINED_GLASS_PANE),
+            new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE),
+            new ItemStack(Material.CYAN_STAINED_GLASS_PANE),
+            new ItemStack(Material.PURPLE_STAINED_GLASS_PANE),
+            new ItemStack(Material.BLUE_STAINED_GLASS_PANE),
+            new ItemStack(Material.BROWN_STAINED_GLASS_PANE),
+            new ItemStack(Material.GREEN_STAINED_GLASS_PANE),
+            new ItemStack(Material.RED_STAINED_GLASS_PANE),
+            new ItemStack(Material.BLACK_STAINED_GLASS_PANE)
+    );
 }

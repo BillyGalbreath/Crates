@@ -1,9 +1,10 @@
 package net.pl3x.bukkit.crates.listener;
 
-import net.pl3x.bukkit.crates.ItemUtil;
 import net.pl3x.bukkit.crates.Crates;
+import net.pl3x.bukkit.crates.ItemUtil;
 import net.pl3x.bukkit.crates.configuration.Lang;
 import net.pl3x.bukkit.crates.crate.Crate;
+import net.pl3x.bukkit.crates.crate.CrateManager;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
@@ -15,9 +16,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
@@ -39,7 +40,7 @@ public class CrateListener implements Listener {
         }
 
         Block block = event.getClickedBlock();
-        Crate crate = plugin.getCrateManager().getCrate(block.getLocation());
+        Crate crate = CrateManager.INSTANCE.getCrate(block.getLocation());
         if (crate == null) {
             return; // not a crate
         }
@@ -57,8 +58,7 @@ public class CrateListener implements Listener {
         if (!crate.isKey(hand) || !ItemUtil.takeItem(player, hand)) {
             if (crate.getKnockback() != null) {
                 player.setVelocity(crate.getKnockback().clone().normalize().multiply(-1)
-                        .multiply(block.getLocation().add(0.5, 0, 0.5).toVector().subtract(player.getLocation().toVector()))
-                        .setY(crate.getKnockback().getY()));
+                        .multiply(block.getLocation().add(0.5, 0, 0.5).subtract(player.getLocation()).toVector()));
             }
             Lang.send(player, Lang.MUST_HAVE_KEY);
             return;
@@ -78,7 +78,7 @@ public class CrateListener implements Listener {
         }
 
         Block block = event.getClickedBlock();
-        Crate crate = plugin.getCrateManager().getCrate(block.getLocation());
+        Crate crate = CrateManager.INSTANCE.getCrate(block.getLocation());
         if (crate == null) {
             return; // not a crate
         }
@@ -88,7 +88,7 @@ public class CrateListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        Crate crate = plugin.getCrateManager().getCrate(event.getInventory());
+        Crate crate = CrateManager.INSTANCE.getCrate(event.getInventory());
         if (crate == null) {
             return; // not a crate
         }
@@ -105,7 +105,7 @@ public class CrateListener implements Listener {
     @EventHandler
     public void onPistonPushCrate(BlockPistonExtendEvent event) {
         for (Block block : event.getBlocks()) {
-            Crate crate = plugin.getCrateManager().getCrate(block.getLocation());
+            Crate crate = CrateManager.INSTANCE.getCrate(block.getLocation());
             if (crate != null) {
                 event.setCancelled(true);
                 return;
@@ -116,7 +116,7 @@ public class CrateListener implements Listener {
     @EventHandler
     public void onPistonPullCrate(BlockPistonRetractEvent event) {
         for (Block block : event.getBlocks()) {
-            Crate crate = plugin.getCrateManager().getCrate(block.getLocation());
+            Crate crate = CrateManager.INSTANCE.getCrate(block.getLocation());
             if (crate != null) {
                 event.setCancelled(true);
                 return;
@@ -126,7 +126,7 @@ public class CrateListener implements Listener {
 
     @EventHandler
     public void onCrateBreak(BlockBreakEvent event) {
-        Crate crate = plugin.getCrateManager().getCrate(event.getBlock().getLocation());
+        Crate crate = CrateManager.INSTANCE.getCrate(event.getBlock().getLocation());
         if (crate == null) {
             return; // not a crate
         }
@@ -135,7 +135,7 @@ public class CrateListener implements Listener {
 
     @EventHandler
     public void onKeyPlace(BlockPlaceEvent event) {
-        Crate crate = plugin.getCrateManager().getCrate(event.getItemInHand());
+        Crate crate = CrateManager.INSTANCE.getCrate(event.getItemInHand());
         if (crate == null) {
             return; // not a key
         }
@@ -143,7 +143,7 @@ public class CrateListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerPickupItem(PlayerPickupItemEvent event) {
+    public void onPlayerPickupItem(EntityPickupItemEvent event) {
         Item item = event.getItem();
 
         String owner = ItemUtil.getLockedOwner(item);
@@ -151,7 +151,7 @@ public class CrateListener implements Listener {
             return; // no owner
         }
 
-        if (owner.equals(event.getPlayer().getUniqueId().toString())) {
+        if (owner.equals(event.getEntity().getUniqueId().toString())) {
             return; // owner picked up
         }
 

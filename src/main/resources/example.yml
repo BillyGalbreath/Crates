@@ -11,6 +11,10 @@ key-item:
 allowed-blocks:
   - CHEST
   - ENDER_CHEST
+hologram-text:
+  - "{crate}"
+  - "Right-Click to Open!"
+  - "Left-Click to Preview!"
 effects:
   on-open:
     commands:
