@@ -3,26 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.pl3x.bukkit.pl3xcrates</groupId>
-    <artifactId>Pl3xCrates</artifactId>
-    <version>1.12-b${build}</version>
+    <groupId>net.pl3x.bukkit.crates</groupId>
+    <artifactId>Crates</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
     <properties>
-        <build>SNAPSHOT</build>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.12-pre5-SNAPSHOT</version>
+            <groupId>net.pl3x.purpur</groupId>
+            <artifactId>purpur</artifactId>
+            <version>1.14.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
     <repositories>
         <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+            <id>purpur-repo</id>
+            <url>https://repo.pl3x.net/</url>
         </repository>
     </repositories>
     <build>
@@ -36,16 +35,6 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.3</version>
-                <configuration>
-                    <links>
-                        <link>https://hub.spigotmc.org/javadocs/spigot/</link>
-                    </links>
                 </configuration>
             </plugin>
         </plugins>
