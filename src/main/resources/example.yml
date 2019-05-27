@@ -6,17 +6,17 @@ key-item:
   material: TRIPWIRE_HOOK
   name: "&b&oCommon &a&oKey"
   lore:
-  - "&7&oOpens a common crate!"
+    - "&7&oOpens a common crate!"
   nbt: '{ench:[{id:34,lvl:10}]}'
 allowed-blocks:
-- CHEST
-- ENDER_CHEST
+  - CHEST
+  - ENDER_CHEST
 effects:
   on-open:
     commands:
-    - 'say {player} has opened the Common Crate!'
+      - 'say {player} has opened the Common Crate!'
     particles:
-      effect: MOBSPAWNER_FLAMES
+      type: FLAME
       offset-min:
         x: -1.0
         y: 0.5
@@ -39,7 +39,7 @@ effects:
       pitch: 0.0
   dormant:
     particles:
-      effect: HAPPY_VILLAGER
+      type: VILLAGER_HAPPY
       offset-min:
         x: -0.75
         y: 1.0
@@ -65,74 +65,74 @@ rewards:
       amount: 16
       nbt: '{Potion:poison}'
     commands:
-    - 'say {player} won 16 poison arrows!'
+      - 'say {player} won 16 poison arrows!'
     chance: 20
     display:
       lore:
-      - "&6&o{chance}% chance"
+        - "&6&o{chance}% chance"
   lingering_potion_of_healing_2:
     item:
       material: LINGERING_POTION
       nbt: '{Potion:strong_healing}'
     commands:
-    - 'say {player} won a Lingering Potion of Healing II!'
+      - 'say {player} won a Lingering Potion of Healing II!'
     chance: 20
     display:
       lore:
-      - "&6&o{chance}% chance"
+        - "&6&o{chance}% chance"
   mooshroom_spawner_egg:
     item:
-      material: MONSTER_EGG
+      material: MOOSHROOM_SPAWN_EGG
       nbt: '{EntityTag:{id:MushroomCow}}'
     commands:
-    - 'say {player} won a Mushroom Cow Spawn Egg!'
+      - 'say {player} won a Mushroom Cow Spawn Egg!'
     chance: 20
     display:
       lore:
-      - "&6&o{chance}% chance"
+        - "&6&o{chance}% chance"
   sword_of_the_gods:
     item:
       material: DIAMOND_SWORD
       name: "&bSword of the Gods"
       lore:
-      - "Created by the Gods for the Gods"
-      - "&7&oMassive damage, massive loot"
+        - "Created by the Gods for the Gods"
+        - "&7&oMassive damage, massive loot"
       nbt: '{ench:[{id:34,lvl:10},{id:16,lvl:10},{id:21,lvl:10},{id:70,lvl:1},{id:20,lvl:2},{id:19,lvl:2}]}'
     commands:
-    - 'say {player} won the Sword of the Gods!'
+      - 'say {player} won the Sword of the Gods!'
     chance: 10
     display:
       lore:
-      - "&6&o{chance}% chance"
+        - "&6&o{chance}% chance"
   griefprevention_claim_blocks:
     commands:
-    - 'acp {player} 100'
-    - 'say {player} won 100 extra claim blocks!'
+      - 'acp {player} 100'
+      - 'say {player} won 100 extra claim blocks!'
     chance: 10
     display:
-      material: GOLD_SPADE
+      material: GOLDEN_SHOVEL
       name: "&e100 Claim Blocks"
       lore:
-      - "&7+100 bonus claim blocks"
-      - "&7for GriefPrevention"
-      - "&6&o{chance}% chance"
+        - "&7+100 bonus claim blocks"
+        - "&7for GriefPrevention"
+        - "&6&o{chance}% chance"
   iron_ingots:
     item:
       material: IRON_INGOT
       amount: 16
     commands:
-    - 'say {player} won 16 iron ingots!'
+      - 'say {player} won 16 iron ingots!'
     chance: 10
     display:
       lore:
-      - "&6&o{chance}% chance"
+        - "&6&o{chance}% chance"
   gold_ingots:
     commands:
-    - 'give {player} gold_ingot 16'
-    - 'say {player} won 16 gold ingots!'
+      - 'give {player} gold_ingot 16'
+      - 'say {player} won 16 gold ingots!'
     chance: 10
     display:
       material: GOLD_INGOT
       amount: 16
       lore:
-      - "&6&o{chance}% chance"
+        - "&6&o{chance}% chance"
