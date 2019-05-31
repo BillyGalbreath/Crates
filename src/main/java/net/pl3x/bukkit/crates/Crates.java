@@ -1,6 +1,6 @@
 package net.pl3x.bukkit.crates;
 
-import net.pl3x.bukkit.crates.command.CmdPl3xCrates;
+import net.pl3x.bukkit.crates.command.CmdCrates;
 import net.pl3x.bukkit.crates.configuration.Config;
 import net.pl3x.bukkit.crates.configuration.Lang;
 import net.pl3x.bukkit.crates.crate.CrateManager;
@@ -24,7 +24,7 @@ public class Crates extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new CrateListener(this), this);
 
-        getCommand("crates").setExecutor(new CmdPl3xCrates(this));
+        getCommand("crates").setExecutor(new CmdCrates(this));
 
         Logger.info(getName() + " v" + getDescription().getVersion() + " enabled!");
     }

@@ -8,44 +8,40 @@ softdepend:
   - HolographicDisplays
 
 commands:
-  pl3xcrates:
+  crates:
     description: "§2Admin plugin commands"
     usage: |-
-      §e/crate (reload|set|remove|givekey) (crate) (player) (amount)
-      §6Ex§7: §e/crate §7- §3View version information.
-      §6Ex§7: §e/crate reload §7- §3Reloads the plugin crates and configs.
-      §6Ex§7: §e/crate set example §7- §3Sets the target block as crate.
-      §6Ex§7: §e/crate remove example §7- §3Removes the target block as crate.
-      §6Ex§7: §e/crate givekey example billy §7- §3Gives billy a key for example crate.
-      §6Ex§7: §e/crate givekey example billy 3 §7- §3Gives billy 3 keys for example crate.
-      §6Ex§7: §e/crate givekey example all 3 §7- §3Gives all online users 3 keys for example crate.
-    aliases:
-      - cr
-      - crate
-      - crates
+      §e/crates (reload|set|remove|givekey) (crate) (player) (amount)
+      §6Ex§7: §e/crates §7- §3View version information.
+      §6Ex§7: §e/crates reload §7- §3Reloads the plugin crates and configs.
+      §6Ex§7: §e/crates set example §7- §3Sets the target block as crate.
+      §6Ex§7: §e/crates remove example §7- §3Removes the target block as crate.
+      §6Ex§7: §e/crates givekey example billy §7- §3Gives billy a key for example crate.
+      §6Ex§7: §e/crates givekey example billy 3 §7- §3Gives billy 3 keys for example crate.
+      §6Ex§7: §e/crates givekey example all 3 §7- §3Gives all online users 3 keys for example crate.
 
 permissions:
-  pl3xcrates.use:
+  crates.use:
     description: Allows to use/open crates
     default: true
-  pl3xcrates.givekey:
+  crates.givekey:
     description: Allows to give crate keys to players
     default: op
-  pl3xcrates.set:
+  crates.set:
     description: Allows to set crates in world
     default: op
-  pl3xcrates.remove:
+  crates.remove:
     description: Allows to remove crates from world
     default: op
-  pl3xcrates.reload:
+  crates.reload:
     description: Allows to reload the plugin
     default: op
 
-  pl3xcrates.admin:
+  crates.admin:
     description: Allows to administer plugin
     default: op
     children:
-      pl3xcrates.givekey: true
-      pl3xcrates.set: true
-      pl3xcrates.remove: true
-      pl3xcrates.reload: true
+      crates.givekey: true
+      crates.set: true
+      crates.remove: true
+      crates.reload: true

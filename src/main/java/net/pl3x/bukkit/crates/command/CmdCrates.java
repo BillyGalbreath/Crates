@@ -25,10 +25,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class CmdPl3xCrates implements TabExecutor {
+public class CmdCrates implements TabExecutor {
     private final Crates plugin;
 
-    public CmdPl3xCrates(Crates plugin) {
+    public CmdCrates(Crates plugin) {
         this.plugin = plugin;
     }
 
