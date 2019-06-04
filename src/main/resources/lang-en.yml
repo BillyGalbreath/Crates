@@ -18,6 +18,7 @@ crate-removed: "&dCrate removed."
 out-of-order: "&4This crate is temporarily out of order!"
 give-key: "&dx{count} {key} &dgiven to player(s)."
 received-key: "&dYou have received x{count} {key}&d!"
+broadcast-first-join-key-winner: "{player} has won a {key} key for being first to login this session!"
 version: "&d{plugin} v{version}."
 reload: "&d{plugin} v{version} reloaded."
 hologram-text:

@@ -8,6 +8,8 @@ public class Config {
     public static boolean DEBUG_MODE = false;
     public static String LANGUAGE_FILE = "lang-en.yml";
 
+    public static String KEY_ON_FIRST_JOIN = "example";
+
     public static void reload() {
         Crates plugin = Crates.getPlugin();
         plugin.saveDefaultConfig();
@@ -17,5 +19,7 @@ public class Config {
         COLOR_LOGS = config.getBoolean("color-logs", true);
         DEBUG_MODE = config.getBoolean("debug-mode", false);
         LANGUAGE_FILE = config.getString("language-file", "lang-en.yml");
+
+        KEY_ON_FIRST_JOIN = config.getString("first-key-on-join", "example");
     }
 }

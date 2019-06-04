@@ -31,6 +31,7 @@ public class Lang {
     public static String OUT_OF_ORDER;
     public static String GIVE_KEY;
     public static String RECEIVED_KEY;
+    public static String BROADCAST_FIRST_JOIN_KEY_WINNER;
     public static String VERSION;
     public static String RELOAD;
     public static List<String> DEFAULT_HOLOGRAM_TEXT = new ArrayList<>();
@@ -64,6 +65,7 @@ public class Lang {
         OUT_OF_ORDER = config.getString("out-of-order", "&4This crate is temporarily out of order!");
         GIVE_KEY = config.getString("give-key", "&dx{count} {key} &dgiven to player(s).");
         RECEIVED_KEY = config.getString("received-key", "&dYou have received x{count} {key}&d!");
+        BROADCAST_FIRST_JOIN_KEY_WINNER = config.getString("broadcast-first-join-key-winner", "{player} has won a {key} key for being first to login this session!");
         VERSION = config.getString("version", "&d{plugin} v{version}.");
         RELOAD = config.getString("reload", "&d{plugin} v{version} reloaded.");
         DEFAULT_HOLOGRAM_TEXT = config.getStringList("default-hologram-text");

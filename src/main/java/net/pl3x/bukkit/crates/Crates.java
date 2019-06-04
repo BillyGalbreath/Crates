@@ -5,7 +5,7 @@ import net.pl3x.bukkit.crates.configuration.Config;
 import net.pl3x.bukkit.crates.configuration.Lang;
 import net.pl3x.bukkit.crates.crate.CrateManager;
 import net.pl3x.bukkit.crates.listener.CrateListener;
-import org.bukkit.Bukkit;
+import net.pl3x.bukkit.crates.listener.FirstJoinListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Crates extends JavaPlugin {
@@ -22,7 +22,8 @@ public class Crates extends JavaPlugin {
 
         CrateManager.INSTANCE.loadAll();
 
-        Bukkit.getPluginManager().registerEvents(new CrateListener(this), this);
+        getServer().getPluginManager().registerEvents(new CrateListener(this), this);
+        getServer().getPluginManager().registerEvents(new FirstJoinListener(this), this);
 
         getCommand("crates").setExecutor(new CmdCrates(this));
 

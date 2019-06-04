@@ -6,3 +6,6 @@ debug-mode: false
 
 # Language file (for translations)
 language-file: lang-en.yml
+
+# Give a key to the first player that joins after server starts up
+first-key-on-join: "example"
