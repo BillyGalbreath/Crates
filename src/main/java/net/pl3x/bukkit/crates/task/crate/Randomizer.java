@@ -71,8 +71,10 @@ public abstract class Randomizer extends BukkitRunnable {
         List<String> commands = reward.getCommands();
         if (commands != null && !commands.isEmpty()) {
             for (String command : commands) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command
-                        .replace("{player}", player.getName()));
+                if (command != null && !command.isEmpty()) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command
+                            .replace("{player}", player.getName()));
+                }
             }
         }
 
