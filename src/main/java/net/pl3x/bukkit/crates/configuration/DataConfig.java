@@ -1,10 +1,11 @@
 package net.pl3x.bukkit.crates.configuration;
 
-import net.pl3x.bukkit.crates.Logger;
 import net.pl3x.bukkit.crates.Crates;
+import net.pl3x.bukkit.crates.Logger;
 import net.pl3x.bukkit.crates.crate.Crate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -111,5 +112,23 @@ public class DataConfig extends YamlConfiguration {
             }
         }
         return locationSet;
+    }
+
+    public boolean isBlacklisted(OfflinePlayer player) {
+        return getStringList("first-join-blacklist").contains(player.getUniqueId().toString());
+    }
+
+    public void addToBlacklist(OfflinePlayer player) {
+        List<String> blacklist = getStringList("first-join-blacklist");
+        blacklist.add(player.getUniqueId().toString());
+        set("first-join-blacklist", blacklist);
+        save();
+    }
+
+    public void removeFromBlacklist(OfflinePlayer player) {
+        List<String> blacklist = getStringList("first-join-blacklist");
+        blacklist.remove(player.getUniqueId().toString());
+        set("first-join-blacklist", blacklist);
+        save();
     }
 }

@@ -32,6 +32,9 @@ public class Lang {
     public static String GIVE_KEY;
     public static String RECEIVED_KEY;
     public static String BROADCAST_FIRST_JOIN_KEY_WINNER;
+    public static String BLACKLIST_UPDATED;
+    public static String BLACKLIST_CHECK;
+    public static String FIRST_JOIN_BLACKLISTED;
     public static String VERSION;
     public static String RELOAD;
     public static List<String> DEFAULT_HOLOGRAM_TEXT = new ArrayList<>();
@@ -66,6 +69,9 @@ public class Lang {
         GIVE_KEY = config.getString("give-key", "&dx{count} {key} &dgiven to player(s).");
         RECEIVED_KEY = config.getString("received-key", "&dYou have received x{count} {key}&d!");
         BROADCAST_FIRST_JOIN_KEY_WINNER = config.getString("broadcast-first-join-key-winner", "{player} has won a {key} key for being first to login this session!");
+        FIRST_JOIN_BLACKLISTED = config.getString("first-join-blacklisted", "&cYou were first to join, but did not receive a key because you are currently blacklisted for abusing the system.\n&cBetter luck next time.");
+        BLACKLIST_UPDATED = config.getString("blacklist-updated", "&dBlacklist has been updated");
+        BLACKLIST_CHECK = config.getString("blacklist-check", "&dBlacklisted: {value}");
         VERSION = config.getString("version", "&d{plugin} v{version}.");
         RELOAD = config.getString("reload", "&d{plugin} v{version} reloaded.");
         DEFAULT_HOLOGRAM_TEXT = config.getStringList("default-hologram-text");

@@ -36,6 +36,9 @@ permissions:
   crates.reload:
     description: Allows to reload the plugin
     default: op
+  crates.blacklist:
+    description: Control the first-join blacklist
+    default: op
 
   crates.admin:
     description: Allows to administer plugin
@@ -45,3 +48,4 @@ permissions:
       crates.set: true
       crates.remove: true
       crates.reload: true
+      crates.blacklist: true

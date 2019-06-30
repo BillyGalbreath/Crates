@@ -2,6 +2,7 @@ package net.pl3x.bukkit.crates.listener;
 
 import net.pl3x.bukkit.crates.Crates;
 import net.pl3x.bukkit.crates.configuration.Config;
+import net.pl3x.bukkit.crates.configuration.DataConfig;
 import net.pl3x.bukkit.crates.configuration.Lang;
 import net.pl3x.bukkit.crates.crate.Crate;
 import net.pl3x.bukkit.crates.crate.CrateManager;
@@ -42,8 +43,15 @@ public class FirstJoinListener implements Listener {
             return;
         }
 
-        ItemStack key = crate.getKey().clone();
         Player winner = event.getPlayer();
+
+        if (DataConfig.getConfig().isBlacklisted(winner)) {
+            Lang.send(winner, Lang.FIRST_JOIN_BLACKLISTED);
+            alreadyGiven = false;
+            return;
+        }
+
+        ItemStack key = crate.getKey().clone();
 
         new BukkitRunnable() {
             public void run() {

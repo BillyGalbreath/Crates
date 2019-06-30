@@ -8,8 +8,10 @@ import net.pl3x.bukkit.crates.configuration.DataConfig;
 import net.pl3x.bukkit.crates.configuration.Lang;
 import net.pl3x.bukkit.crates.crate.Crate;
 import net.pl3x.bukkit.crates.crate.CrateManager;
+import org.apache.commons.lang.BooleanUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -35,7 +37,7 @@ public class CmdCrates implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
-            return Stream.of("reload", "set", "remove", "givekey")
+            return Stream.of("reload", "set", "remove", "givekey", "blacklist")
                     .filter(cmd -> cmd.startsWith(args[0].toLowerCase()))
                     .collect(Collectors.toList());
         }
@@ -44,7 +46,17 @@ public class CmdCrates implements TabExecutor {
                     .filter(crate -> crate.getIdentifier().startsWith(args[1].toLowerCase()))
                     .map(Crate::getIdentifier).collect(Collectors.toList());
         }
+        if (args.length == 2 && args[0].equalsIgnoreCase("blacklist")) {
+            return Stream.of("check", "add", "remove")
+                    .filter(cmd -> cmd.startsWith(args[1].toLowerCase()))
+                    .collect(Collectors.toList());
+        }
         if (args.length == 3 && (args[0].equalsIgnoreCase("givekey"))) {
+            return Bukkit.getOnlinePlayers().stream()
+                    .filter(player -> player.getName().toLowerCase().startsWith(args[2].toLowerCase()))
+                    .map(Player::getName).collect(Collectors.toList());
+        }
+        if (args.length == 3 && args[0].equalsIgnoreCase("blacklist")) {
             return Bukkit.getOnlinePlayers().stream()
                     .filter(player -> player.getName().toLowerCase().startsWith(args[2].toLowerCase()))
                     .map(Player::getName).collect(Collectors.toList());
@@ -237,6 +249,39 @@ public class CmdCrates implements TabExecutor {
                         .replace("{key}", key.hasItemMeta() && key.getItemMeta().hasDisplayName() ? key.getItemMeta().getDisplayName() : "key"));
             }
             return true;
+        }
+
+        if (args[0].equalsIgnoreCase("blacklist")) {
+            if (!sender.hasPermission("crates.blacklist")) {
+                Lang.send(sender, Lang.COMMAND_NO_PERMISSION);
+                return true;
+            }
+
+            if (args.length < 3) {
+                return false;
+            }
+
+            OfflinePlayer target = Bukkit.getOfflinePlayer(args[2]);
+            DataConfig data = DataConfig.getConfig();
+
+            if (args[1].equalsIgnoreCase("check")) {
+                Lang.send(sender, Lang.BLACKLIST_CHECK
+                        .replace("{value}", BooleanUtils.toStringYesNo(data.isBlacklisted(target))));
+                return true;
+            }
+
+            if (args[1].equalsIgnoreCase("add")) {
+                data.addToBlacklist(target);
+                Lang.send(sender, Lang.BLACKLIST_UPDATED);
+                return true;
+            }
+
+            if (args[1].equalsIgnoreCase("remove")) {
+                data.removeFromBlacklist(target);
+                Lang.send(sender, Lang.BLACKLIST_UPDATED);
+                return true;
+            }
+            return false;
         }
 
         Lang.send(sender, Lang.UNKNOWN_COMMAND);
