@@ -8,15 +8,17 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 
 import java.util.List;
 
 public class ItemUtil {
     public static void giveItem(Player player, ItemStack itemStack) {
         Logger.debug(player.getName() + " received item at their feet! " + itemStack.toString());
-        setLockedOwner(player.getWorld().dropItem(player.getLocation(), itemStack), player);
+        player.getInventory().addItem(itemStack).forEach((index, overflow) -> {
+            Item item = player.getWorld().dropItem(player.getLocation(), overflow);
+            item.setOwner(player.getUniqueId());
+            item.setPickupDelay(0);
+        });
     }
 
     public static boolean takeItem(Player player, ItemStack itemStack) {
@@ -90,28 +92,6 @@ public class ItemUtil {
         }
 
         return material;
-    }
-
-    public static void setLockedOwner(Item item, Player player) {
-        item.setMetadata("owner", new FixedMetadataValue(Crates.getPlugin(), player.getUniqueId().toString()));
-    }
-
-    public static String getLockedOwner(Item item) {
-        if (!item.hasMetadata("owner")) {
-            return null; // no metadata
-        }
-
-        List<MetadataValue> meta = item.getMetadata("owner");
-        if (meta.size() == 0) {
-            return null; // no metadata
-        }
-
-        MetadataValue metaValue = meta.get(0);
-        if (metaValue == null) {
-            return null; // no metadata
-        }
-
-        return metaValue.asString();
     }
 
     public static boolean equals(ItemStack item1, ItemStack item2) {

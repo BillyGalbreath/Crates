@@ -7,7 +7,6 @@ import net.pl3x.bukkit.crates.crate.Crate;
 import net.pl3x.bukkit.crates.crate.CrateManager;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +15,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -139,23 +137,6 @@ public class CrateListener implements Listener {
         if (crate == null) {
             return; // not a key
         }
-        event.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onPlayerPickupItem(EntityPickupItemEvent event) {
-        Item item = event.getItem();
-
-        String owner = ItemUtil.getLockedOwner(item);
-        if (owner == null || owner.isEmpty() || owner.equalsIgnoreCase("none")) {
-            return; // no owner
-        }
-
-        if (owner.equals(event.getEntity().getUniqueId().toString())) {
-            return; // owner picked up
-        }
-
-        // not owner, cancel pickup event
         event.setCancelled(true);
     }
 }
