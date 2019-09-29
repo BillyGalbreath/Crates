@@ -1,7 +1,6 @@
 package net.pl3x.bukkit.crates.crate;
 
 import net.pl3x.bukkit.crates.Crates;
-import net.pl3x.bukkit.crates.ItemUtil;
 import net.pl3x.bukkit.crates.Logger;
 import net.pl3x.bukkit.crates.configuration.CrateConfig;
 import net.pl3x.bukkit.crates.configuration.DataConfig;
@@ -123,8 +122,11 @@ public class CrateManager {
     }
 
     public Crate getCrate(ItemStack key) {
+        if (key == null) {
+            return null;
+        }
         for (Crate crate : crates) {
-            if (ItemUtil.equals(crate.getKey(), key)) {
+            if (crate.getKey().isSimilar(key)) {
                 return crate;
             }
         }

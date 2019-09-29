@@ -21,17 +21,13 @@ public class ItemUtil {
         });
     }
 
-    public static boolean takeItem(Player player, ItemStack itemStack) {
-        ItemStack hand = player.getInventory().getItemInMainHand();
-        if (!ItemUtil.equals(itemStack, hand)) {
-            return false;
-        }
-        if (hand.getAmount() > 1) {
-            hand.setAmount(hand.getAmount() - 1);
+    public static boolean takeItem(Player player, ItemStack item) {
+        if (item.getAmount() > 1) {
+            item.setAmount(item.getAmount() - 1);
         } else {
-            hand = new ItemStack(Material.AIR);
+            item = new ItemStack(Material.AIR);
         }
-        player.getInventory().setItemInMainHand(hand);
+        player.getInventory().setItemInMainHand(item);
         return true;
     }
 
@@ -92,13 +88,5 @@ public class ItemUtil {
         }
 
         return material;
-    }
-
-    public static boolean equals(ItemStack item1, ItemStack item2) {
-        item1 = item1.clone();
-        item2 = item2.clone();
-        item1.setAmount(1);
-        item2.setAmount(1);
-        return item1.equals(item2);
     }
 }

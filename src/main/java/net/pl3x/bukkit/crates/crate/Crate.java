@@ -120,7 +120,7 @@ public class Crate {
     }
 
     public boolean isKey(ItemStack item) {
-        return ItemUtil.equals(item, key);
+        return item != null && item.isSimilar(key);
     }
 
     public Set<Material> getAllowedBlocks() {
