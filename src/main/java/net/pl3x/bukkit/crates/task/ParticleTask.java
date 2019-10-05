@@ -17,9 +17,9 @@ public class ParticleTask extends BukkitRunnable {
     public void run() {
         location.getWorld().spawnParticle(
                 particles.getParticle(),
-                location.getX(),
-                location.getY(),
-                location.getZ(),
+                location.getX() + particles.getOffsetX(),
+                location.getY() + particles.getOffsetY(),
+                location.getZ() + particles.getOffsetZ(),
                 particles.getAmount(),
                 particles.getOffsetX(),
                 particles.getOffsetY(),
