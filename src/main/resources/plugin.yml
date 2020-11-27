@@ -50,14 +50,3 @@ permissions:
     default: op
     children:
       command.crates: true
-
-  crates.admin:
-    description: Allows to administer plugin
-    default: op
-    children:
-      command.crates: true
-      crates.givekey: true
-      crates.set: true
-      crates.remove: true
-      crates.reload: true
-      crates.blacklist: true

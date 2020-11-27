@@ -11,7 +11,7 @@ public class FireworkTask extends BukkitRunnable {
     private final FireworkData fireworkData;
 
     public FireworkTask(Location location, FireworkData fireworkData) {
-        this.location = location.clone().add(0.5, 0, 0.5);
+        this.location = location.clone().add(0.5, 1.5, 0.5);
         this.fireworkData = fireworkData;
     }
 
